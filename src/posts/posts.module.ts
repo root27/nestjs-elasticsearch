@@ -1,14 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { PostsController } from './posts.controller';
+import { SearchModule } from '../search/search.module';
 
 @Module({
-  imports: [ElasticsearchModule.register({
-    node: 'http://localhost:9200',
-
-  }),
-  ],
+  imports: [SearchModule],
   providers: [PostsService],
   controllers: [PostsController],
 

@@ -17,16 +17,42 @@ export class PostsService {
         content: post.content,
         author: post.author,
       }
-    },
-      {
-
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }
+    }
     );
 
 
+
+  }
+
+
+  async getPosts() {
+
+    const res = await this.es.search({
+      index: 'posts',
+      body: {
+        query: {
+          match_all: {}
+        }
+      }
+    });
+
+    return res.hits.hits.map((hit) => hit._source);
+
+
+  }
+
+  async getPost(title: string) {
+
+    const posts = await this.es.search({
+      index: 'posts',
+      body: {
+        query: {
+          match: { title: title }
+        }
+      }
+    });
+
+    return posts.hits.hits.map((hit) => hit._source);
 
   }
 

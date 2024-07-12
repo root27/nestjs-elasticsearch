@@ -21,7 +21,9 @@ export class SearchService {
     });
 
 
-    return body.hits.hits;
+
+    return body.hits.hits.map((hit) => hit._source);
+
   }
 
 
